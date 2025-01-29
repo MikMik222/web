@@ -1,0 +1,114 @@
+﻿@model RegisterDodatekFinalViewModel
+
+@{
+    ViewData["Title"] = "Vytvoř dodatek";
+}
+
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+@if (Model != null)
+{
+
+
+    <div class="section">
+        <div class="form-value">
+
+            <form asp-action="VytvorDodatek" method="post" enctype="multipart/form-data">
+                <input asp-for="idDodatku" hidden>
+                <input asp-for="@Model.idSmlouva" hidden>
+
+
+                @{
+                    if (Model.idDodatku == 1)
+                    {
+                        <h1>Změna maximálního počtu osob</h1>
+                        if (ViewBag.chyba != null)
+                        {
+                            <span class="text-danger">@ViewBag.chyba</span>
+                        }
+                        <div class="inputbox">
+                            <input asp-for="@Model.maxPocetOseb" type="number">
+                            <label for="">Maximální počet osob</label>
+                        </div>
+                    }
+                    else if (Model.idDodatku == 2)
+                    {
+                        <h1>Ukončení nájmu</h1>
+                        if (ViewBag.chyba != null)
+                        {
+                            <span class="text-danger">@ViewBag.chyba</span>
+                        }
+                        <div class="inputbox">
+                            @{
+                                Model.datumUkonceni = @DateTime.Now;
+                            }
+                            <input asp-for="@Model.datumUkonceni" type="date">
+                            <label for="">Datum ukončení smlouvy</label>
+                        </div>
+                    }
+                    else if (Model.idDodatku == 3)
+                    {
+                        <h1>Změna cen</h1>
+                        if (ViewBag.chyba != null)
+                        {
+                            string chyby = @ViewBag.chyba;
+                            string[] pole = chyby.Split("\n");
+                            foreach (var item in pole)
+                            {
+                                <span class="text-danger">@item</span>
+                                <br/>
+                            }
+                            
+                        }
+                        <div class="inputbox">
+                            @{
+                                Model.datumUkonceni = @DateTime.Now;
+                            }
+                            <input asp-for="@Model.datumUkonceni" type="date">
+                            <label for="">Ceny platné od</label>
+                        </div>
+                        <div class="inputbox">
+                            <input asp-for="@Model.cenaPronajem" type="number">
+                            <label for="">Cena nájmu</label>
+                        </div>
+
+                        <div class="inputbox">
+                            <input asp-for="cenaVody" type="text" required>
+                            <label for="">Cena Vody</label>
+                        </div>
+
+                        <div class="inputbox">
+                            <input asp-for="cenaPlynu" type="text" required>
+                            <label for="">Cena Plynu</label>
+                        </div>
+                        <div class="inputbox">
+                            <input asp-for="cenaPlynu" type="text" required>
+                            <label for="">Cena Internetu</label>
+                        </div>
+
+                        <div class="inputbox">
+                            <input asp-for="cenaElektriky" type="text" required>
+                            <label for="">Cena Elektřiny</label>
+                        </div>
+                        <div class="inputbox">
+                            <input asp-for="cenaUklidu" type="text" required>
+                            <label for="">Cena Úklidu</label>
+                        </div>
+                        <div class="inputbox">
+                            <input asp-for="cenaOdpadu" type="text" required>
+                            <label for="">Cena Odpadu</label>
+                        </div>
+                        <div class="inputbox">
+                            <input asp-for="cenaSpolecneEleketriky" type="text" required>
+                            <label for="">Cena Společné Elektřiny</label>
+                        </div>
+                    }
+                }
+                <button type="submit">Vytvořit dodatek</button>
+            </form>
+        </div>
+    </div>
+}

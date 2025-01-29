@@ -1,0 +1,162 @@
+﻿@model RegisterNemovitostViewModel
+@{
+    ViewData["Title"] = "Register nemovitost";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+<div class="section">
+    <div class="form-value">
+
+        <form asp-action="RegisterNemovitost" method="post" enctype="multipart/form-data">
+            <div class="nadpis">Registrace</div>
+            @{
+                if (ViewBag.chyba != null)
+                {
+                    string chyby = @ViewBag.chyba;
+                    string[] pole = chyby.Split("\n");
+                    foreach (var item in pole)
+                    {
+                        <span class="text-danger">@item</span>
+                        <br />
+                    }
+                }
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="inputbox">
+                <input asp-for="UliceACisloPop" type="text" id="UliceACisloPop" required>
+                <label for="">Ulice a číslo popisný</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Obec" type="text" id="Obec" required>
+                <label for="">Obec</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Psc" type="text"  id="psc" required>
+
+                <label for="">PSČ</label>
+            </div>
+
+
+
+            <div class="inputbox">
+                <input asp-for="modelNemovitost.cenaNajmu" type="text" required>
+                <label for="">Cena Nájmu</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="cenaVody" type="text" required>
+                <label for="">Cena Vody</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="cenaPlynu" type="text" required>
+                <label for="">Cena Plynu</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="cenaPlynu" type="text" required>
+                <label for="">Cena Internetu</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="cenaElektriky" type="text" required>
+                <label for="">Cena Elektřiny</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="cenaUklidu" type="text" required>
+                <label for="">Cena Úklidu</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="cenaOdpadu" type="text" required>
+                <label for="">Cena Odpadu</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="cenaSpolecneEleketriky" type="text" required>
+                <label for="">Cena Společné Elektřiny</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="@Model.date" type="date" required>
+                <label for="">Dostupnost od</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="@Model.modelNemovitost.vybavenost" type="checkbox">
+                <label for="">Vybaven</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="@Model.modelNemovitost.plocha" type="number" required>
+                <label for="">Plocha </label>
+            </div>
+
+            <div>
+                @{
+                    if (Model != null && Model.Dispozices != null)
+                    {
+                        <label asp-for="modelNemovitost.idDizpozice">Vyber dizpozici:</label>
+                        <br />
+                        <select asp-for="@Model.modelNemovitost.idDizpozice">
+                            @foreach (var dizpozice in Model.Dispozices)
+                            {
+                                <option value="@dizpozice.ID">@dizpozice.Dispozice</option>
+                            }
+                        </select>
+
+                    }
+
+                }
+            </div>
+            <hr />
+            <div>
+                @{
+                    if (Model != null && Model.typBudovy != null)
+                    {
+                        <label asp-for="modelNemovitost.idTypBudovy">Vyber typ:</label>
+                        <br />
+                        <select asp-for="@Model.modelNemovitost.idTypBudovy">
+                            @foreach (var typ in Model.typBudovy)
+                            {
+                                <option value="@typ.ID">@typ.Volba</option>
+                            }
+                        </select>
+
+                    }
+
+                }
+            </div>
+            <hr>
+            <div>
+                @{
+                    if (Model != null && Model.enerNarocnostNemovitostis != null)
+                    {
+                        <label asp-for="modelNemovitost.idEneNarocnosti">Vyber energetickou náročnost:</label>
+                        <br />
+                        <select asp-for="@Model.modelNemovitost.idEneNarocnosti">
+                            @foreach (var penb in Model.enerNarocnostNemovitostis)
+                            {
+                                <option value="@penb.ID">@penb.EnerNárocnost</option>
+                            }
+                        </select>
+
+                    }
+
+                }
+            </div>
+            <hr>
+            <div>
+                <label asp-for="@Model.FotoNems[0].Image">Vybrat obrázky:</label>
+                <br />
+                <input asp-for="@Model.Images" multiple>
+            </div>
+
+
+
+            <button type="submit">Vytvoř nemovitost</button>
+        </form>
+    </div>
+</div>
+

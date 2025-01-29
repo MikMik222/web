@@ -1,0 +1,95 @@
+﻿@model RegisterNajmceViewModel
+@{
+    ViewData["Title"] = "Register najemnik";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+<div class="section">
+    <div class="form-value">
+        <form asp-action="EditNajemnik" method="post" enctype="multipart/form-data">
+            <div class="nadpis">Editace</div>
+            <input asp-for="najemnik.ID" hidden>
+            @{
+                if (ViewBag.chyba != null)
+                {
+                    string chyby = @ViewBag.chyba;
+                    string[] pole = chyby.Split("\n");
+                    foreach (var item in pole)
+                    {
+                        <span class="text-danger">@item</span>
+                        <br />
+                    }
+                }
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="inputbox">
+                <input asp-for="najemnik.jmeno" type="text" id="jmeno" required>
+                <label for="">Jmeno</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="najemnik.prijmeni" type="text" id="prijmeni" required>
+                <label for="">Přijmení</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="date" type="date" id="datumNarozeni" required>
+                <label for="">Datum narození</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="najemnik.rodneCislo" type="text" id="rodneCislo" required>
+                <label for="">Rodné číslo</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="najemnik.email" type="text" id="Email" required>
+                <label for="">Email</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="UliceACisloPop" type="text" id="UliceACisloPop" required>
+                <label for="">Ulice a číslo popisný</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Obec" type="text" id="Obec" required>
+                <label for="">Obec</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Psc" type="text" id="psc" required>
+
+                <label for="">PSČ</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="najemnik.telefon" type="tel" id="telephone" required>
+
+                <label for="">Phone</label>
+            </div>
+            <div>
+                @{
+                    if (Model != null && Model.predvolbys != null)
+                    {
+                        <label>Select preset:</label>
+
+                        <br />
+                        <select asp-for="@Model.najemnik.idPredvolby">
+                            @foreach (var predvolba in Model.predvolbys)
+                            {
+                                <option value="@predvolba.ID">@predvolba.NameCountry -> @predvolba.predvolba</option>
+                            }
+                        </select>
+                    }
+                }
+            </div>
+
+
+            <button type="submit">Editovat</button>
+        </form>
+    </div>
+</div>

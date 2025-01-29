@@ -1,0 +1,130 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Registrace";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+<div class="section">
+    <div class="form-value">
+        <form asp-action="Register" method="post" class="form-signup">
+            <div class="nadpis">Registrace</div>
+            @{
+                if (ViewBag.chyba != null)
+                {
+                    string chyby = @ViewBag.chyba;
+                    string[] pole = chyby.Split("\n");
+                    foreach (var item in pole)
+                    {
+                        <span class="text-danger">@item</span>
+                        <br />
+                    }
+                }
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="inputbox">
+                <input asp-for="Username" type="text" id="email" required>
+                <label for="">Email</label>
+            </div>
+            @{
+                if (ViewBag.info != null)
+                {
+                    <span class="text-danger">@ViewBag.info</span>
+                }
+            }
+            <div class="inputbox">
+                <input asp-for="FirstName" type="text" id="first-name" required>
+                <label for="">Jméno</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="LastName" type="text" id="last-name" required>
+                <label for="">Příjmení</label>
+            </div>
+
+            @{
+                if (ViewBag.info2 != null)
+                {
+                    <span class="text-danger">@ViewBag.info2</span>
+                }
+            }
+
+            <div class="inputbox">
+                <input asp-for="datumNarozeni" type="date" id="datumNarozeni" required>
+                <label for="">Datum narození</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="rodneCislo" type="text" id="rodneCislo" required>
+                <label for="">Rodné číslo</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Phone" type="tel" required>
+
+                <label for="">Phone</label>
+            </div>
+            <div>
+                @{
+                    if (Model != null && Model.Predvolbys != null)
+                    {
+                        <label>Select preset:</label>
+
+                        <br />
+                        <select asp-for="@Model.idPredvolby">
+                            @foreach (var predvolba in Model.Predvolbys)
+                            {
+                                <option value="@predvolba.ID">@predvolba.NameCountry -> @predvolba.predvolba</option>
+                            }
+                        </select>
+
+                    }
+
+                }
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="UliceACisloPop" type="text" id="UliceACisloPop" required>
+                <label for="">Ulice a číslo popisný</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Obec" type="text" id="Obec" required>
+                <label for="">Obec</label>
+            </div>
+
+            <div class="inputbox">
+                <input asp-for="Psc" type="text" id="psc" required>
+
+                <label for="">PSČ</label>
+            </div>
+
+
+            <span style="color:#c79202">
+                Heslo musí mít minimálně:<br>
+                jedno velké písmeno<br>
+                jedno malé písmeno<br>
+                jedno číslo
+            </span>
+            <div class="inputbox">
+                <input asp-for="Password" type="password" id="user-pass" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}" required>
+                <label for="">Password</label>
+            </div>
+            <div class="inputbox">
+                <input asp-for="RepeatedPassword" type="password" id="user-Repass" required>
+                <label for="">Repeat password</label>
+
+            </div>
+            <span asp-validation-for="RepeatedPassword" class="text-danger"></span>
+
+            <button type="submit" asp-route-id="0">Registrovat</button>
+            <div class="register">
+                <p>Máš úcet  <a asp-action="Login">Přihlásit</a></p>
+            </div>
+        </form>
+
+
+    </div>
+
+</div>

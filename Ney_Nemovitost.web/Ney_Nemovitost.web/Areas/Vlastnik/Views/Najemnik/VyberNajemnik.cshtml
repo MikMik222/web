@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Najemnik>
+@{
+    ViewData["Title"] = "Vyber najemnik";
+}
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/Stranky.css" />
+}
+@{
+    if (Model != null)
+    {
+        int pocetZaznamuNaStrance = 20;
+        <div style="text-align:center;">
+            @{
+                int t = 0;
+                if (Url.ActionContext.HttpContext.Request.Query.ContainsKey("page")) t = Int32.Parse((string)Url.ActionContext.HttpContext.Request.Query["page"]);
+                @for (int i = 0; i < MathF.Ceiling((float)Model.ToList().Count / pocetZaznamuNaStrance); ++i)
+                {
+                    if (t == i)
+                    {
+                        <a style="color:darkred;font-size:large;font-weight:bold;" class="cislastranek">@(i + 1)</a>
+                    }
+                    else
+                    {
+                        <a class="cislastranek" asp-action="VyberNajemnik" asp-route-page="@i">@(i + 1)</a>
+                    }
+                }
+            }
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Jméno
+                    </th>
+                    <th>
+                        Datum narození
+                    </th>
+                    <th>
+                        Rodné číslo
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    IList<Najemnik> data = Model.ToList();
+                    for (int i = 0; i < data.Count && i < pocetZaznamuNaStrance; ++i)
+                    {
+                        t = 0;
+                        if (Url.ActionContext.HttpContext.Request.Query.ContainsKey("page")) t = Int32.Parse((string)Url.ActionContext.HttpContext.Request.Query["page"]);
+                        if (t * pocetZaznamuNaStrance + i >= data.Count) continue;
+                        var item = data[t * pocetZaznamuNaStrance + i];
+
+                        {
+                            <tr>
+                                <td>
+                                    @item.jmeno @item.prijmeni
+                                </td>
+                                <td>
+                                    @item.datumNarozeni.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.rodneCislo
+                                </td>
+                                <td>
+                                    <a asp-action="EditNajemnik" asp-route-id="@item.ID">Editovat nájemníka</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}

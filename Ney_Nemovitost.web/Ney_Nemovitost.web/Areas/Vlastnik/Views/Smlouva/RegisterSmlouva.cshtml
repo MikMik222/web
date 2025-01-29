@@ -1,0 +1,95 @@
+﻿@model RegisterSmlouvaViewModel
+@{
+    ViewData["Title"] = "Register nemovitost";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+@if (Model != null)
+{
+    if (Model.najemnici == null || Model.najemnici.Count == 0)
+    {
+        <h1>Smlouva nejde vytvořit když nejsou nájemníci</h1>
+    }
+    else
+    {
+        <div class="section">
+            <div class="form-value">
+                <form asp-action="RegisterSmlouva" method="post" enctype="multipart/form-data">
+                    <div class="nadpis">Registrace</div>
+                    @{
+                        if (ViewBag.chyba != null)
+                        {
+                            string chyby = @ViewBag.chyba;
+                            string[] pole = chyby.Split("\n");
+                            foreach (var item in pole)
+                            {
+                                <span class="text-danger">@item</span>
+                                <br />
+                            }
+                        }
+                    }
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <input asp-for="@Model.modelSmlouva.idNemovitost" type="hidden" />
+                    <div class="inputbox">
+                        <input asp-for="@Model.dateOd" type="date">
+                        <label for="">Platnost od</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.dateDo" type="date">
+                        <label for="">Platnost do</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.maxPocetOsob" type="number">
+                        <label for="">Maximální počet osob</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.denVMesiciKdyZaplatit" min="1" max="31" type="number">
+                        <label for="">Kdy má být splátka na účtě</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.cisloUctu" type="text" required>
+                        <label for="">Číslo účtu</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.vratnaKauce" type="number" required>
+                        <label for="">Vratná kauce v Kč</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input asp-for="@Model.cenaSlevy" type="number" required>
+                        <label for="">Sleva při rádném placení</label>
+                    </div>
+
+                    @{
+
+                        if (Model != null && Model.najemnici != null)
+                        {
+                            <label asp-for="modelSmlouva.idNajemnik">Vyber nájemníka:</label>
+                            <br />
+                            <select asp-for="@Model.modelSmlouva.idNajemnik">
+                                @foreach (var najemnik in Model.najemnici)
+                                {
+                                    <option value="@najemnik.ID">@najemnik.jmeno | @najemnik.prijmeni | @najemnik.rodneCislo</option>
+                                }
+                            </select>
+
+                        }
+
+                    }
+
+
+                    <button type="submit">Vytvořit smlouvu</button>
+                </form>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,44 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+
+
+<div class="section">
+    <div class="form-value">
+        <form asp-action="Login" method="post" class="form-signin">
+            <h2>Login</h2>
+            <div class="inputbox">
+                <ion-icon name="mail-outline"></ion-icon>
+                <input asp-for="Username" type="email" required>
+                <label for="">Email</label>
+            </div>
+            <span asp-validation-for="Username" class="text-danger"></span>
+            <div class="inputbox">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                <input asp-for="Password" type="password"  required>
+                <label for="">Password</label>
+            </div>
+                    @{ if (Model?.LoginFailed == true)
+                        {
+            <div class="text-danger">Login Failed!</div> }
+         }
+            <button type="submit">Log in</button>
+            <div class="register">
+                <p>Don't have a account <a asp-action="Register">Register</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Script{
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+}

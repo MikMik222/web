@@ -1,0 +1,56 @@
+﻿@model DodatekViewModel
+
+@{
+    ViewData["Title"] = "Vyber dodatek";
+}
+@{
+    string id = ViewContext.RouteData.Values["id"].ToString();
+    string smlouva = Url.ActionContext.HttpContext.Request.Query["smlouva"].ToString();
+}
+
+@{
+    if (@Model != null)
+    {
+        <h1>Nemovitost</h1>
+        <p>Typ nemovitosti: @Model.modelNemovitost.optionNemovitost.Volba</p>
+        <h3>Adresa</h3>
+        <p>Ulice a číslo popisné: @Model.modelNemovitost.adresa.UliceACisloPop</p>
+        <p>Obec: @Model.modelNemovitost.adresa.Obec</p>
+        <p>PSČ: @Model.modelNemovitost.adresa.Psc</p>
+        <h1>Smlouva</h1>
+        <h3>Platnost</h3>
+        @Model.modelSmlouva.platnaOd.ToShortDateString()
+
+        @Model.modelSmlouva.platnaDo.ToShortDateString()
+        <h3>Nájemník</h3>
+        <p>@Model.najemnik.jmeno @Model.najemnik.prijmeni</p>
+        <p>+@Model.najemnik.predvolby.predvolba @Model.najemnik.telefon</p>
+        <p>@Model.najemnik.email</p>
+        
+        
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Dodatek typu
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.typyDodatkus)
+                {
+                    <tr>
+                        <td>
+                            @item.TypDodatku
+                        </td>
+                        <td>
+                            <a asp-action="VytvorDodatek" asp-route-id="@id" asp-route-smlouva="@smlouva" asp-route-dodatek="@item.Id">Vytvořit dadatek</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

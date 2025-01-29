@@ -1,0 +1,158 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins',sans-serif;
+}
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 83vh;
+    width: 100%;
+    background: linear-gradient(178deg, rgba(201, 234, 252, 0.51) 14.9%, rgba(139, 192, 216, 0.73) 80%);
+    background-position: center;
+    background-size: cover;
+}
+
+.nadpis {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    color: black;
+    border: 2px solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-box {
+    position: relative;
+    width: 400px;
+    height: 450px;
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+    -webkit-text-fill-color: black;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+
+h2 {
+    font-size: 2em;
+    color: black;
+    text-align: center;
+}
+hr {
+    width: 310px;
+    color: black;
+    opacity:1
+}
+select {
+    margin-top: 5px;
+    width: 310px;
+}
+.inputbox {
+    position: relative;
+    margin: 30px 0;
+    width: 310px;
+    border-bottom: 2px solid black;
+}
+
+    .inputbox label {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        color: black;
+        font-size: 1em;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+input:focus ~ label,
+input:valid ~ label{
+    top: -5px;
+}
+
+.inputbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding: 0 35px 0 5px;
+    color: black;
+}
+
+.inputbox ion-icon {
+    position: absolute;
+    right: 8px;
+    color: black;
+    font-size: 1.2em;
+    top: 20px;
+}
+
+.forget {
+    margin: -15px 0 15px;
+    font-size: .9em;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .forget label input {
+        margin-right: 3px;
+    }
+
+    .forget label a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+        .forget label a:hover {
+            text-decoration: underline;
+        }
+
+button {
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.register {
+    font-size: .9em;
+    color: black;
+    text-align: center;
+    margin: 25px 0 10px;
+}
+
+    .register p a {
+        text-decoration: none;
+        color: black;
+        font-weight: 600;
+    }
+
+        .register p a:hover {
+            text-decoration: underline;
+        }

@@ -1,0 +1,79 @@
+﻿@model DetailNemovitostViewModel
+
+@{
+    ViewData["Title"] = "Detail nemovitost";
+}
+<style>
+
+    .tab {
+        tab-size: 4;
+    }
+
+</style>
+@{
+    if (Model != null && Model.modelNemovitost != null)
+    {
+        <h2>Akce</h2>
+        <div class="text-center">
+            <a asp-action="EditNemovitost" asp-controller="Nemovitost" asp-area="Vlastnik" asp-route-id="@Model.modelNemovitost.ID" class="btn btn-outline-dark flex-shrink-0">Editace nemovitostí</a>
+        </div>
+        <div class="text-center">
+            <a asp-action="RegisterSmlouva" asp-controller="Smlouva" asp-area="Vlastnik" asp-route-id="@Model.modelNemovitost.ID" class="btn btn-outline-dark flex-shrink-0">Přidat smlouvu</a>
+        </div>
+        <div class="text-center">
+            <a asp-action="RegisterZavada" asp-controller="Zavady" asp-area="Vlastnik" asp-route-id="@Model.modelNemovitost.ID" class="btn btn-outline-dark flex-shrink-0">Přidat závadu</a>
+        </div>
+        <div class="text-center">
+            <a asp-action="VyberSmlouvu" asp-controller="Dodatek" asp-area="Vlastnik" asp-route-id="@Model.modelNemovitost.ID" class="btn btn-outline-dark flex-shrink-0">Smlouvy</a>
+        </div>
+        <div class="text-center">
+            <a asp-action="VyberZavadu" asp-controller="Zavady" asp-area="Vlastnik" asp-route-id="@Model.modelNemovitost.ID" class="btn btn-outline-dark flex-shrink-0">Závady</a>
+        </div>
+        <h1>Nemovitost</h1>
+        <p>Typ nemovitosti: @Model.modelNemovitost.optionNemovitost.Volba</p>
+        <h3>Adresa</h3>
+        <p>Ulice a číslo popisné: @Model.modelNemovitost.adresa.UliceACisloPop</p>
+        <p>Obec: @Model.modelNemovitost.adresa.Obec</p>
+        <p>PSČ: @Model.modelNemovitost.adresa.Psc</p>
+        <h3>Ceny</h3>
+        <p>Nájem: @Model.modelNemovitost.cenaNajmu</p>
+        <p>Energie: @Model.modelNemovitost.cenaEnergii</p>
+        <pre>&emsp; voda: @Model.cenaVody</pre>
+        <pre>&emsp; plyn: @Model.cenaPlynu</pre>
+        <pre>&emsp; elektřina: @Model.cenaElektriky</pre>
+        <p>Služby: @Model.modelNemovitost.cenaSluzeb</p>
+        <pre>&emsp; internet: @Model.cenaInternetu</pre>
+        <pre>&emsp; úklid: @Model.cenaUklidu</pre>
+        <pre>&emsp; odpad: @Model.cenaOdpadu</pre>
+        <pre>&emsp; společná elektřina: @Model.cenaSpolecneEleketriky</pre>
+
+        
+        <h3>Vlastnosti</h3>
+        <p>Dizpozice nemovitosti: @Model.modelNemovitost.dispoziceNemovitosti.Dispozice</p>
+        <p>Energetická náročnost: @Model.modelNemovitost.enerNarocnost.EnerNárocnost</p>
+        <p>Plocha objektu: @Model.modelNemovitost.plocha</p>
+        <p>Vybaven: @Model.modelNemovitost.vybavenost</p>
+        if (Model.modelNemovitost.fotografie != null)
+        {
+            <h3>Fotografie</h3>
+            <div class="row">
+
+                @for (int x = 0; x < Model.modelNemovitost.fotografie.Count; x++)
+
+                {
+
+                    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+
+
+                        @{
+                            var foto = Model.modelNemovitost.fotografie[x];
+                            <img src="@foto.ImageSrc"
+                     class="w-100 shadow-1-strong rounded mb-4" />
+                        }
+                    </div>
+                }
+
+            </div>
+        }
+    }
+}

@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNetCore.Routing
+@model IEnumerable<ModelNemovitost>
+
+@{
+    ViewData["Title"] = "Vyber nemovitost";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ulice a číslo popisný
+            </th>
+            <th>
+                Obec
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.adresa.UliceACisloPop)
+                </td>
+                <td>
+                    @item.adresa.Obec
+                </td>
+                @if (ViewBag.Option != null)
+                {
+                    if (ViewBag.Option == 1)
+                    {
+                        <td>
+                            <a asp-action="ZobrazHistoriiCen" asp-route-id="@item.ID">Zobrazit historii cen</a>
+                        </td>
+                    }
+                    else if (ViewBag.Option == 2)
+                    {
+                        <td>
+                            <a asp-action="ZobrazHistoriiSmluv" asp-route-id="@item.ID">Zobrazit historii smluv</a>
+                        </td>
+                    }
+                    else if (ViewBag.Option == 3)
+                    {
+
+                       
+                        
+                        <td>
+                            <a asp-action="VyberSmlouvuHisDod" asp-route-id="@item.ID">Zobrazit historii dodatků</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                }
+            </tr>
+        }
+    </tbody>
+</table>

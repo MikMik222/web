@@ -1,0 +1,90 @@
+﻿@using Microsoft.AspNetCore.Routing
+@model HistorieCenViewModel
+
+@{
+    ViewData["Title"] = "Vyber nemovitost";
+}
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/Stranky.css" />
+}
+@{
+    if (@Model != null)
+    {
+        int pocetZaznamuNaStrance = 20;
+        <h1>Nemovitost</h1>
+        <p>Typ nemovitosti: @Model.modelNemovitost.optionNemovitost.Volba</p>
+        <h3>Adresa</h3>
+        <p>Ulice a číslo popisné: @Model.modelNemovitost.adresa.UliceACisloPop</p>
+        <p>Obec: @Model.modelNemovitost.adresa.Obec</p>
+        <p>PSČ: @Model.modelNemovitost.adresa.Psc</p>
+        <h3>Aktuální ceny</h3>
+        <p>Nájem: @Model.modelNemovitost.cenaNajmu</p>
+        <p>Energie: @Model.modelNemovitost.cenaEnergii</p>
+        <p>Služby: @Model.modelNemovitost.cenaSluzeb</p>
+
+
+        <h3>Vlastnosti</h3>
+        <p>Dizpozice nemovitosti: @Model.modelNemovitost.dispoziceNemovitosti.Dispozice</p>
+        <p>Energetická náročnost: @Model.modelNemovitost.enerNarocnost.EnerNárocnost</p>
+        <p>Plocha objektu: @Model.modelNemovitost.plocha</p>
+        <p>Vybaven: @Model.modelNemovitost.vybavenost</p>
+        if (Model.historyCen != null)
+        {
+            <div style="text-align:center;">
+                @{
+                    int t = 0;
+                    if (Url.ActionContext.HttpContext.Request.Query.ContainsKey("page")) t = Int32.Parse((string)Url.ActionContext.HttpContext.Request.Query["page"]);
+                    @for (int i = 0; i < MathF.Ceiling((float)Model.historyCen.ToList().Count / pocetZaznamuNaStrance); ++i)
+                    {
+                        if (t == i)
+                        {
+                            <a style="color:darkred;font-size:large;font-weight:bold;" class="cislastranek">@(i + 1)</a>
+                        }
+                        else
+                        {
+                            <a class="cislastranek" asp-action="ZobrazHistoriiCen" asp-route-page="@i">@(i + 1)</a>
+                        }
+                    }
+                }
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Název služby
+                        </th>
+                        <th>
+                            Platná od
+                        </th>
+                        <th>
+                            Cena
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        for (int i = 0; i < Model.historyCen.Count && i < pocetZaznamuNaStrance; ++i)
+                        {
+                            t = 0;
+                            if (Url.ActionContext.HttpContext.Request.Query.ContainsKey("page")) t = Int32.Parse((string)Url.ActionContext.HttpContext.Request.Query["page"]);
+                            if (t * pocetZaznamuNaStrance + i >= Model.historyCen.Count) continue;
+                            var item = Model.historyCen[t * pocetZaznamuNaStrance + i];
+                            <tr>
+                                <td>
+                                    @item.moznostiSluzeb.NazevSluzby
+                                </td>
+                                <td>
+                                    @item.cenaPlatnaOd
+                                </td>
+                                <td>
+                                    @item.cena Kč
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    }
+}

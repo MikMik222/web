@@ -1,0 +1,74 @@
+﻿@model ModelZavady
+@{
+    ViewData["Title"] = "Editace závady";
+}
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/loginNem.css" />
+}
+
+<div class="section">
+    <div class="form-value">
+        <form asp-action="EditZavady" method="post" enctype="multipart/form-data">
+            @{
+                if (ViewBag.chyba != null)
+                {
+                    string chyby = @ViewBag.chyba;
+                    string[] pole = chyby.Split("\n");
+                    foreach (var item in pole)
+                    {
+                        <span class="text-danger">@item</span>
+                        <br />
+                    }
+                }
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input asp-for="@Model.ID" type="hidden" />
+            <div>
+
+                    
+                    <label for="">Datum nahlášení</label><br/>
+                <div>@Model.datumNahlaseni</div>
+                <div class="inputbox">
+                    <input asp-for="@Model.datumOpravyFull" type="date">
+                    <label for="">Datum opravy</label>
+                </div>
+                <div class="inputbox">
+                    <input asp-for="@Model.cenaOpravy" type="number">
+                    <label for="">Cena opravy</label>
+                </div>
+
+                <div class="inputbox">
+                    <input asp-for="@Model.nazevOpravare" type="text">
+                    <label for="">Kdo provedl opravu</label>
+                </div>
+
+                <div class="inputbox">
+                    <input asp-for="@Model.popisZavady" required type="text">
+                    <label for="">Popis závady</label>
+                </div>
+
+                <div class="inputbox">
+                    <input asp-for="@Model.popisOpravy" type="text">
+                    <label for="">Popis opravy</label>
+                </div>
+
+                @{
+                    if (Model != null && Model.najemniks != null)
+                    {
+                        <label asp-for="idNajemnik">Vyber nájemníka:</label>
+                        <br />
+                        <select asp-for="@Model.idNajemnik">
+                            @foreach (var najemnik in Model.najemniks)
+                            {
+                                <option value="@najemnik.ID">@najemnik.jmeno | @najemnik.prijmeni | @najemnik.rodneCislo</option>
+                            }
+                        </select>
+                    }
+                }
+            </div>
+            <button type="submit">Editovat závadu</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ney_Nemovitost.web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Script", required: false)
+</head>
+<body>
+    <header>
+
+        <!-- Sidebar (hidden by default) -->
+        <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left" style="margin:auto;max-width:1200px;display:none;z-index:2;width:20%;min-width:300px; background-color:#FAFAFA; color:#1B262C;margin-bottom: 60px;" id="mySidebar">
+            <a href="javascript:void(0)" onclick="w3_close()"
+               class="w3-bar-item w3-button">X</a>
+            @if (User.Identity.IsAuthenticated == true)
+            {
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Nemovitost</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Nemovitost" asp-action="MeNemovitosti" onclick="w3_close()" class="w3-bar-item w3-button ">Mé nemovitosti</a>
+                    <a asp-area="Vlastnik" asp-controller="Nemovitost" asp-action="RegisterNemovitost" onclick="w3_close()" class="w3-bar-item w3-button ">Vytvořit nemovitost</a>
+                    <a asp-area="Vlastnik" asp-controller="Nemovitost" asp-action="VyberNemovitostNem" onclick="w3_close()" class="w3-bar-item w3-button ">Editace nemovitosti</a>
+                </div>
+
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Závady</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Zavady" asp-action="VyberNemovitostZavady" onclick="w3_close()" class="w3-bar-item w3-button ">Vytvořit závadu</a>
+                    <a asp-area="Vlastnik" asp-controller="Zavady" asp-action="VyberNemovitostZavady" onclick="w3_close()" class="w3-bar-item w3-button" asp-route-id="1">Editace závady</a>
+                </div>
+
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Najemce</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Najemnik" asp-action="RegisterNajemnik" onclick="w3_close()" class="w3-bar-item w3-button">Vytvořit najemnik</a>
+                    <a asp-area="Vlastnik" asp-controller="Najemnik" asp-action="VyberNajemnik" onclick="w3_close()" class="w3-bar-item w3-button">Edituj nájemníka</a>
+                </div>
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Smlouva</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Smlouva" asp-action="VyberNemovitost" onclick="w3_close()" class="w3-bar-item w3-button">Vytvoř smlouvu</a>
+                </div>
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Dodatek</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Dodatek" asp-action="VyberNemovitost" onclick="w3_close()" class="w3-bar-item w3-button">Vytvoř dodatek</a>
+                </div>
+                <div onclick="toggleDropdown(event)" class="w3-bar-item dropbtn w3-button">Historie</div>
+                <div class="dropdown-content">
+                    <a asp-area="Vlastnik" asp-controller="Historie" asp-action="VyberNemovitostNaHistorii" onclick="w3_close()" class="w3-bar-item w3-button" asp-route-option ="1">Historie cen</a>
+                    <a asp-area="Vlastnik" asp-controller="Historie" asp-action="VyberNemovitostNaHistorii" onclick="w3_close()" class="w3-bar-item w3-button" asp-route-option ="2">Historie smluv</a>
+                    <a asp-area="Vlastnik" asp-controller="Historie" asp-action="VyberNemovitostNaHistorii" onclick="w3_close()" class="w3-bar-item w3-button" asp-route-option ="3">Historie dodatků</a>
+                </div>
+            }
+        </nav>
+
+        <!-- Top menu -->
+        <div class="w3-top">
+            <div class=" w3-xlarge" style="max-width:1200px;margin:auto; background-color:#FAFAFA; color:#1B262C;">
+                <div class="w3-button w3-left" onclick="w3_open()">☰</div>
+                <div class="w3-right  ">
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+
+                        <a class="text-dark" asp-area="Security" asp-controller="Account" asp-action="Register"><span class="glyphicon"></span>Registrovat</a>
+                        <a class="text-dark" asp-area="Security" asp-controller="Account" asp-action="Login"><span class="glyphicon glyphicon-log-in"></span> Přihlásit</a>
+
+                    }
+                    else
+                    {
+
+                        <a class="text-dark" href="#">Logged as @User.Identity.Name</a>
+                        <a class="text-dark" asp-area="Security" asp-controller="Account" asp-action="Logout">Logout</a>
+
+                    }
+                </div>
+                <div class="w3-center">Ney Nemovitost</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="parallax">
+        <div class="container no-parallax" style="max-width:1200px">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+
+    <footer class="border-top footer text-muted ">
+        <div class="container">
+            &copy; 2023 - Ney_Nemovitost.web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<section>
+
+    <script>
+        // Script to open and close sidebar
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+        }
+
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+        }
+
+        function toggleDropdown(event) {
+            var dropdownContent = event.target.nextElementSibling;
+            dropdownContent.classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</section>
